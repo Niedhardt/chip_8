@@ -33,28 +33,26 @@ impl DisplayDriver {
             canvas,
         }
     }
-
-    pub fn color(value: u8) -> pixels::Color {
-        if value == 0 {
-            return pixels::Color::RGB(0,0,0);
-        }
-        return pixels::Color::RGB(0,250,0);
-    }
-
-    pub fn fill_pixel(&mut self, vram: [[u8; 64]; 32])  {
-        self.canvas.clear();
+    pub fn fill_pixel(&mut self, vram: [[u8; CHIP8_WIDTH]; CHIP8_HEIGHT])  {
         for i in 0..vram.len() {
             for j in 0..vram[i].len() {
-                let x = (i as u32) * SCALE_FACTOR ;
-                let y = (j as u32) * SCALE_FACTOR ;
-                if vram[i][j] == 1 {
-                    self.canvas.set_draw_color(DisplayDriver::color(vram[i][j]));
-                }
+                let x = (j as u32) * SCALE_FACTOR ;
+                let y = (i as u32) * SCALE_FACTOR ;
 
-                self.canvas.fill_rect(Rect::new(x as i32, j as i32, SCALE_FACTOR, SCALE_FACTOR)).expect("TODO: panic message");
+                self.canvas.set_draw_color(color(vram[i][j]));
+                self.canvas.fill_rect(Rect::new(x as i32, y as i32, SCALE_FACTOR, SCALE_FACTOR)).expect("TODO: panic message");
             }
         }
         self.canvas.present();
     }
 
+
+
+
+}
+pub fn color(value: u8) -> pixels::Color {
+    if value == 0 {
+        return pixels::Color::RGB(0,0,0);
+    }
+    return pixels::Color::RGB(0,250,0);
 }

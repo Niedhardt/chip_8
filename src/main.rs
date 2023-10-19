@@ -38,9 +38,12 @@ pub fn main() {
 
         let op_code = chip.get_opcode();
         chip.execute_opcodes(op_code);
-        display_driver.fill_pixel(chip.vram);
+        if chip.vram_changed {
+            display_driver.fill_pixel(chip.vram);
+        }
+
        // display_driver.canvas.present();
-        ::std::thread::sleep(Duration::new(1, 1_000_000_000u32 / 60));
+        ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 /2));
     }
 
 }
