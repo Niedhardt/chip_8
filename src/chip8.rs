@@ -252,6 +252,12 @@ impl Chip8 {
         }
         self.vram_changed = true;
     }
+
+    pub fn op_ex9e(&mut self, x: usize) {
+        if self.v[x] {
+
+        }
+    }
     pub fn fetch() {
 
     }
