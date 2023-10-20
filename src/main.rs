@@ -7,8 +7,9 @@ use std::env;
 use drivers::{DisplayDriver, RomDriver};
 use sdl2::pixels::Color;
 use sdl2::event::Event;
-use sdl2::keyboard::Keycode;
+use sdl2::keyboard::{Keycode, Scancode};
 use std::time::Duration;
+use sdl2::event;
 use sdl2::rect::Point;
 use crate::chip8::Chip8;
 
@@ -30,10 +31,27 @@ pub fn main() {
             match event {
                 Event::Quit {
                     ..
-                } | Event::KeyDown {..} => break 'running,
+                } | Event::KeyDown {scancode:Some(Scancode::W), ..} => break 'running,
                 _ => {}
             }
         }
+
+
+        for event in event_pump.poll_iter() {
+            match event {
+                Event::KeyDown => {
+                    match Event::KeyDown {
+                        event.Scancode::AcHome => ()aa
+                    }
+                }
+                _ => {}
+            }
+        }
+        /*JJ:WJJ
+        let keys = event_pump.keyboard_state()
+            .pressed_scancodes()
+            .filter_map(Keycode::from_scancode)
+            .collect();*/
 
 
         let op_code = chip.get_opcode();
